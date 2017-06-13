@@ -7,3 +7,12 @@ C:\Csharp\ProcessList\ProcessList\bin\Debug\ProcessList.pdb
 C:\Csharp\ProcessList\ProcessList\obj\Debug\ProcessList.exe
 C:\Csharp\ProcessList\ProcessList\obj\Debug\ProcessList.pdb
 C:\Csharp\ProcessList\ProcessList\obj\Debug\ProcessList.csprojResolveAssemblyReference.cache
+C:\Csharp\c-sharp-process-note-qayol1\ProcessList\bin\Debug\ProcessList.exe.config
+C:\Csharp\c-sharp-process-note-qayol1\ProcessList\bin\Debug\ProcessList.exe
+C:\Csharp\c-sharp-process-note-qayol1\ProcessList\bin\Debug\ProcessList.pdb
+C:\Csharp\c-sharp-process-note-qayol1\ProcessList\obj\Debug\ProcessList.csprojResolveAssemblyReference.cache
+C:\Csharp\c-sharp-process-note-qayol1\ProcessList\obj\Debug\ProcessList.Form1.resources
+C:\Csharp\c-sharp-process-note-qayol1\ProcessList\obj\Debug\ProcessList.Properties.Resources.resources
+C:\Csharp\c-sharp-process-note-qayol1\ProcessList\obj\Debug\ProcessList.csproj.GenerateResource.Cache
+C:\Csharp\c-sharp-process-note-qayol1\ProcessList\obj\Debug\ProcessList.exe
+C:\Csharp\c-sharp-process-note-qayol1\ProcessList\obj\Debug\ProcessList.pdb

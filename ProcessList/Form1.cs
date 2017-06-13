@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -18,6 +19,7 @@ namespace ProcessList
         PerformanceCounter PC;
         Dictionary<int, string> processDict;
         Task selectedTask;
+        List<Task> tasks;
 
 
 
@@ -30,6 +32,7 @@ namespace ProcessList
         {
             public int key;
             public String name;
+            public String note;
 
             public override string ToString()
             {
@@ -40,21 +43,31 @@ namespace ProcessList
         private void Form1_Load(object sender, EventArgs e)
         {
             processDict = new Dictionary<int, string>();
+            tasks = new List<Task>();
             GetProcesses();
             ShowProcesses();
         }
 
         void ShowProcesses()
         {
-            ListOfTasks.Items.Clear();
             foreach (var pair in processDict)
             {
                 Task element = new Task();
                 element.key = pair.Key;
                 element.name = pair.Value;
+                element.note = "";
+                tasks.Add(element);
+            }
+            FillListboxWithTasks();
+        }
+
+        void FillListboxWithTasks()
+        {
+            ListOfTasks.Items.Clear();
+            foreach (Task element in tasks) 
+            {
                 ListOfTasks.Items.Add(element);
             }
-
         }
 
         void GetProcesses()
@@ -71,24 +84,22 @@ namespace ProcessList
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             selectedTask = (Task) ListOfTasks.SelectedItem;
-            ShowAttributes(selectedTask);
+            ShowAttributes();
         }
 
-        private void ShowAttributes(Task selectedTask)
+        private void ShowAttributes()
         {
+            NoteTextBox.Text = selectedTask.note;
             try
             {
                 Process selectedProcess = Process.GetProcessById(selectedTask.key);
-                label1.Text = "Task name: " + selectedTask.name.ToString();
-                label2.Text = "Task ID: " + selectedTask.key.ToString();
-                label4.Text = "Start time: " + selectedProcess.StartTime.ToString();
-                label5.Text = "Running time: " + (DateTime.Now - selectedProcess.StartTime).ToString();
-                label6.Text = "Memory usage: " + getMemoryUsage(selectedProcess).ToString() + " Mb";
-                PC = new PerformanceCounter("Process", "% Processor Time", selectedTask.name, true);
-                PC.NextValue();
-                Thread.Sleep(0);
-                label3.Text = String.Format("CPU usage: {0:0.00}", PC.NextValue()) + "%";
-                label7.Text = "Threads:" + selectedProcess.Threads.Count.ToString();
+                TaskNameLabel.Text = "Task name: " + selectedTask.name.ToString();
+                TaskIdLabel.Text = "Task ID: " + selectedTask.key.ToString();
+                StartTimeLabel.Text = "Start time: " + selectedProcess.StartTime.ToString();
+                RunningTimeLabel.Text = "Running time: " + (DateTime.Now - selectedProcess.StartTime).ToString();
+                MemoryUsageLabel.Text = "Memory usage: " + GetMemoryUsage(selectedProcess).ToString() + " Mb";
+                CpuUsageLabel.Text = String.Format("CPU usage: {0:0.00}", GetCpuUsage()) + "%";
+                ThreadsLabel.Text = "Threads:" + selectedProcess.Threads.Count.ToString();
 
             }
             catch (Exception)
@@ -97,7 +108,15 @@ namespace ProcessList
             }
         }
 
-        int getMemoryUsage(Process selectedProcess)
+        float GetCpuUsage()
+        {
+            PC = new PerformanceCounter("Process", "% Processor Time", selectedTask.name, true);
+            PC.NextValue();
+            Thread.Sleep(100);
+            return PC.NextValue();
+        }
+
+        int GetMemoryUsage(Process selectedProcess)
         {
             int memsize = 0; // memsize in Megabyte
             PerformanceCounter PC = new PerformanceCounter();
@@ -111,16 +130,22 @@ namespace ProcessList
             return memsize;
         }
 
-        void ShowCpuUsage()
-        {
-                
-        }
-
         private void textBox1_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar == (char)13)
             {
-                
+                int id = 0;
+                foreach (Task element in tasks)
+                {
+                    if (element.Equals(selectedTask))
+                    {
+                        id = tasks.IndexOf(element);
+                    }
+                }
+                Task task = tasks[id]; 
+                task.note = NoteTextBox.Text;
+                tasks[id] = task;
+                FillListboxWithTasks();
             }
         }
     }
