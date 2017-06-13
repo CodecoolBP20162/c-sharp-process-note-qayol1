@@ -38,6 +38,7 @@
             this.ThreadsLabel = new System.Windows.Forms.Label();
             this.NoteTextBox = new System.Windows.Forms.TextBox();
             this.Notes = new System.Windows.Forms.Label();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // TaskNameLabel
@@ -129,11 +130,23 @@
             this.Notes.TabIndex = 9;
             this.Notes.Text = "Notes:";
             // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Location = new System.Drawing.Point(710, 37);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(110, 17);
+            this.checkBox1.TabIndex = 10;
+            this.checkBox1.Text = "Always on the top";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(831, 361);
+            this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.Notes);
             this.Controls.Add(this.NoteTextBox);
             this.Controls.Add(this.ThreadsLabel);
@@ -163,6 +176,7 @@
         private System.Windows.Forms.Label ThreadsLabel;
         private System.Windows.Forms.TextBox NoteTextBox;
         private System.Windows.Forms.Label Notes;
+        private System.Windows.Forms.CheckBox checkBox1;
     }
 }
 

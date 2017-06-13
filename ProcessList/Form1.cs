@@ -20,6 +20,7 @@ namespace ProcessList
         Dictionary<int, string> processDict;
         Task selectedTask;
         List<Task> tasks;
+        Boolean check;
 
 
 
@@ -96,7 +97,8 @@ namespace ProcessList
                 TaskNameLabel.Text = "Task name: " + selectedTask.name.ToString();
                 TaskIdLabel.Text = "Task ID: " + selectedTask.key.ToString();
                 StartTimeLabel.Text = "Start time: " + selectedProcess.StartTime.ToString();
-                RunningTimeLabel.Text = "Running time: " + (DateTime.Now - selectedProcess.StartTime).ToString();
+                TimeSpan runningTime = (DateTime.UtcNow - selectedProcess.StartTime.ToUniversalTime());
+                RunningTimeLabel.Text = string.Format("Running time: {0}", runningTime.ToString(@"hh\:mm\:ss"));
                 MemoryUsageLabel.Text = "Memory usage: " + GetMemoryUsage(selectedProcess).ToString() + " Mb";
                 CpuUsageLabel.Text = String.Format("CPU usage: {0:0.00}", GetCpuUsage()) + "%";
                 ThreadsLabel.Text = "Threads:" + selectedProcess.Threads.Count.ToString();
@@ -145,7 +147,21 @@ namespace ProcessList
                 Task task = tasks[id]; 
                 task.note = NoteTextBox.Text;
                 tasks[id] = task;
+                MessageBox.Show("Notes will be just in the memory.");
                 FillListboxWithTasks();
+            }
+        }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            if (check)
+            {
+                check = false;
+                ActiveForm.TopMost = false;
+            } else
+            {
+                check = true;
+                ActiveForm.TopMost = true;
             }
         }
     }
